@@ -33,7 +33,7 @@ class Blocks {
 	 */
 	public function register() {
 		{{#isMultiBlock}}
-		$blocks_directory = trailingslashit( {{slugPascalCase}}__PATH . 'src' );
+		$blocks_directory = trailingslashit( {{slugPascalCase}}_PATH . 'build' );
 
 		// Register all the blocks in the plugin.
 		if ( file_exists( $blocks_directory ) ) {

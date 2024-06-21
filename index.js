@@ -9,7 +9,7 @@ module.exports = {
     namespace: "eighteen73-block",
     title: "eighteen73 Block",
     author: "eighteen73",
-    description: "A block plugin scaffolded from eighteen73's structure",
+    description: "A block scaffolded from eighteen73 standards",
     dashicon: "smiley",
     npmDependencies: [
       "@eighteen73/eslint-config-wordpress",
@@ -21,7 +21,7 @@ module.exports = {
     example: {},
     customScripts: {
       "new-plugin-block":
-        "cd src && npx @wordpress/create-block@latest --template @eighteen73/create-block-template --no-plugin",
+        "cd src && npx @wordpress/create-block@latest --template @eighteen73/create-block-template --variant basic --no-plugin",
       "lint:css": "stylelint './src/**/*.scss'",
       "lint:js": "eslint './src/**/*.js'",
       "format:css": "stylelint --fix './src/**/*.scss'",
@@ -42,9 +42,6 @@ module.exports = {
     basic: {},
     multi: {
       slug: "multi-block-plugin",
-      namespace: "multi-block-plugin",
-      title: "Multi Block Plugin",
-      description: "A plugin containing multiple blocks",
     },
   },
   pluginTemplatesPath: join(__dirname, "plugin-templates"),

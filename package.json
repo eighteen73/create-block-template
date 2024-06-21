@@ -1,6 +1,6 @@
 {
   "name": "@eighteen73/create-block-template",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A template for use with @wordpress/create-block to allow scaffolding blocks to eighteen73 standards.",
   "author": "eighteen73",
   "license": "MIT",
@@ -13,7 +13,7 @@
   "homepage": "https://github.com/eighteen73/create-block-template#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eighteen73/create-block-template.git"
+    "url": "git+https://github.com/eighteen73/create-block-template.git"
   },
   "bugs": {
     "url": "https://github.com/eighteen73/create-block-template/issues"
