@@ -47,7 +47,7 @@ class Blocks {
 		}
 		{{/isMultiBlock}}
 		{{^isMultiBlock}}
-		register_block_type( {{slugPascalCase}}__PATH . '/build' );
+		register_block_type( {{slugPascalCase}}_PATH . '/build' );
 		{{/isMultiBlock}}
 	}
 }
