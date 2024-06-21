@@ -42,5 +42,5 @@ npm run new-plugin-block -- block-name
 Create a block without the build tools (for theme use):
 
 ```
-npx @wordpress/create-block@latest --template @eighteen73/create-block-template --no-plugin
+npx @wordpress/create-block@latest --template @eighteen73/create-block-template --variant basic --no-plugin
 ```
