@@ -1,24 +1,5 @@
 {
-  "name": "{{author}}/{{namespace}}",
-  "description": "{{description}}",
-  "type": "wordpress-plugin",
-  "require-dev": {
-    "eighteen73/wordpress-coding-standards": "^2.0"
-  },
-  "config": {
-    "allow-plugins": {
-      "dealerdirect/phpcodesniffer-composer-installer": true
-    }
-  },
-  "scripts": {
-    "test": [
-      "phpcs"
-    ]
-  }
-}
-
-{
-	"name": "{{author}}/{{namespace}}",
+	"name": "{{namespace}}/{{slug}}",
 	"description": "{{description}}",
 	"type": "wordpress-plugin",
 	"license": "{{license}}",
@@ -31,11 +12,11 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"Eighteen73\\{{slugPascalCase}}\\": "includes/classes/"
+			"{{namespacePascalCase}}\\{{slugPascalCase}}\\": "includes/classes/"
 		}
 	},
 	"require": {
-		"php": ">=7.4"
+		"php": ">={{requiresPHP}}"
 	},
 	"require-dev": {
 		"eighteen73/wordpress-coding-standards": "^2.0.0"

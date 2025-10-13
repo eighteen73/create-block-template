@@ -6,12 +6,16 @@ const { join } = require("path");
 module.exports = {
   defaultValues: {
     author: 'eighteen73',
-    namespace: 'eighteen73-plugin',
-    textdomain: 'eighteen73-plugin',
+    namespace: 'eighteen73',
+    requiresAtLeast: '6.8',
+    requiresPHP: '7.4',
     category: 'text',
     slug: 'example-block',
     title: 'Example Block',
     description: 'Example Block',
+    version: '0.1.0',
+    pluginURI: 'https://eighteen73.co.uk',
+    updateURI: 'https://eighteen73.co.uk',
     attributes: {},
     supports: {
       html: false,
@@ -53,6 +57,13 @@ module.exports = {
       "plugin-zip": "wp-scripts plugin-zip",
       "pot": "wp i18n make-pot . languages/{{textdomain}}.pot --domain={{textdomain}} --exclude=node_modules,vendor,.git"
     },
+    transformer: (view) => {
+        return {
+          ...view,
+          slugScreamingSnakeCase: view.slug.replace(/-/g, "_").toUpperCase(),
+          namespaceCamelCase: view.namespace.charAt(0).toLowerCase() + view.namespace.slice(1).toLowerCase(),
+        };
+      },
   },
   variants: {
     default: {},
@@ -64,7 +75,9 @@ module.exports = {
       },
       viewScriptModule: 'file:./view.js',
     },
-    noBlocks: {},
+    noBlocks: {
+        blockTemplatesPath: null,
+    },
   },
   pluginTemplatesPath: join(__dirname, "plugin-templates"),
   blockTemplatesPath: join(__dirname, "block-templates"),

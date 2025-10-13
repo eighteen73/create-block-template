@@ -5,8 +5,8 @@
  * Update URI:        {{updateURI}}
  * Description:       {{description}}
  * Version:           {{version}}
- * Requires at least: 6.8
- * Requires PHP:      7.4
+ * Requires at least: {{requiresAtLeast}}
+ * Requires PHP:      {{requiresPHP}}
  * Requires Plugins:
  * Author:            eighteen73
  * Author URI:        https://eighteen73.co.uk
@@ -19,17 +19,17 @@
  * @package           Eighteen73\{{slugPascalCase}}
  */
 
-namespace Eighteen73\{{slugPascalCase}};
+namespace {{namespacePascalCase}}\{{slugPascalCase}};
 
 defined( 'ABSPATH' ) || exit;
 
 // Useful global constants.
-define( '{{slugPascalCase}}_URL', plugin_dir_url( __FILE__ ) );
-define( '{{slugPascalCase}}_PATH', plugin_dir_path( __FILE__ ) );
-define( '{{slugPascalCase}}_INC', {{slugPascalCase}}_PATH . 'includes/' );
+define( '{{slugScreamingSnakeCase}}_URL', plugin_dir_url( __FILE__ ) );
+define( '{{slugScreamingSnakeCase}}_PATH', plugin_dir_path( __FILE__ ) );
+define( '{{slugScreamingSnakeCase}}_INC', {{slugScreamingSnakeCase}}_PATH . 'includes/' );
 
 // Require the autoloader.
-$autoloader = {{slugPascalCase}}_PATH . '/vendor/autoload.php';
+$autoloader = {{slugScreamingSnakeCase}}_PATH . '/vendor/autoload.php';
 
 if ( file_exists( $autoloader ) ) {
 	require_once $autoloader;

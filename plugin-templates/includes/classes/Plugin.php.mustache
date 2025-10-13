@@ -2,10 +2,10 @@
 /**
  * Main plugin class.
  *
- * @package Eighteen73\{{slugPascalCase}}
+ * @package {{namespacePascalCase}}\{{slugPascalCase}}
  */
 
-namespace Eighteen73\{{slugPascalCase}};
+namespace {{namespacePascalCase}}\{{slugPascalCase}};
 
 defined( 'ABSPATH' ) || exit;
 
@@ -25,9 +25,9 @@ class Plugin {
 		add_action( 'init', [ $this, 'load_textdomain' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_scripts' ] );
-		{{#isDefaultVariant}}
+		{{^isNoBlocksVariant}}
 		add_action( 'init', [ $this, 'register_blocks' ] );
-		{{/isDefaultVariant}}
+		{{/isNoBlocksVariant}}
 	}
 
 	/**
@@ -39,7 +39,7 @@ class Plugin {
 		load_plugin_textdomain(
 			'{{textdomain}}',
 			false,
-			{{slugPascalCaseUpper}}_PATH . '/languages'
+			{{slugScreamingSnakeCase}}_PATH . '/languages'
 		);
 	}
 
@@ -70,8 +70,8 @@ class Plugin {
 	 * @return void
 	 */
 	public function enqueue_admin_scripts(): void {}
-	{{#isDefaultVariant}}
 
+    {{^isNoBlocksVariant}}
 	/**
 	 * Register blocks.
 	 *
@@ -79,9 +79,9 @@ class Plugin {
 	 */
 	public function register_blocks(): void {
 		wp_register_block_types_from_metadata_collection(
-			{{slugPascalCase}}_PATH . '/build',
-			{{slugPascalCase}}_PATH . '/build/blocks-manifest.php',
+			{{slugScreamingSnakeCase}}_PATH . '/build/blocks',
+			{{slugScreamingSnakeCase}}_PATH . '/build/blocks/blocks-manifest.php',
 		);
 	}
-	{{/isDefaultVariant}}
+	{{/isNoBlocksVariant}}
 }
