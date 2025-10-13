@@ -5,44 +5,66 @@ const { join } = require("path");
 
 module.exports = {
   defaultValues: {
-    slug: "eighteen73-block",
-    namespace: "eighteen73-block",
-    title: "eighteen73 Block",
-    author: "eighteen73",
-    description: "A block scaffolded from eighteen73 standards",
-    dashicon: "smiley",
-    npmDependencies: [
+    author: 'eighteen73',
+    namespace: 'eighteen73-plugin',
+    textdomain: 'eighteen73-plugin',
+    category: 'text',
+    slug: 'example-block',
+    title: 'Example Block',
+    description: 'Example Block',
+    attributes: {},
+    supports: {
+      html: false,
+    },
+    wpScripts: false,
+    wpEnv: false,
+    version: false,
+    editorStyle: false,
+    style: 'file:./style-index.css',
+    render: 'file:./render.php',
+    npmDevDependencies: [
       "@eighteen73/eslint-config-wordpress",
       "@eighteen73/stylelint-config-wordpress",
+      "@wordpress/browserslist-config",
+      "@wordpress/prettier-config",
+      "@wordpress/scripts",
+      "lefthook",
+      "postcss-preset-env",
     ],
-    customPackageJSON: { files: ["[^.]*"] },
     viewScript: "file:./view.js",
     render: "file:./render.php",
     example: {},
     customScripts: {
-      "new-plugin-block":
-        "cd src && npx @wordpress/create-block@latest --template @eighteen73/create-block-template --variant basic --no-plugin",
-      "lint:css": "stylelint './src/**/*.scss'",
-      "lint:js": "eslint './src/**/*.js'",
+      "start": "wp-scripts start --blocks-manifest",
+      "build": "wp-scripts build --blocks-manifest",
+      "check-engines": "wp-scripts check-engines",
+      "check-licenses": "wp-scripts check-licenses",
+      "format": "npm run format:css && npm run format:js && npm run format:php",
       "format:css": "stylelint --fix './src/**/*.scss'",
       "format:js": "eslint --fix './src/**/*.js'",
-      build: "wp-scripts build",
-      start: "wp-scripts start",
-    },
-    transformer: (view) => {
-      const isMultiBlock = view.variantVars && view.variantVars.isMultiVariant;
-      return {
-        ...view,
-        folderName: isMultiBlock ? `src/${view.slug}` : `src`,
-        isMultiBlock,
-      };
+      "format:php": "composer run format",
+      "lint": "npm run lint:css && npm run lint:js && npm run lint:php",
+      "lint:css": "wp-scripts lint-style",
+      "lint:js": "wp-scripts lint-js",
+      "lint:php": "composer run lint",
+      "lint:md:docs": "wp-scripts lint-md-docs",
+      "lint:pkg-json": "wp-scripts lint-pkg-json",
+      "packages-update": "wp-scripts packages-update",
+      "plugin-zip": "wp-scripts plugin-zip",
+      "pot": "wp i18n make-pot . languages/{{textdomain}}.pot --domain={{textdomain}} --exclude=node_modules,vendor,.git"
     },
   },
   variants: {
-    basic: {},
-    multi: {
-      slug: "multi-block-plugin",
+    default: {},
+    innerBlocks: {},
+    interactive: {
+      supports: {
+        html: false,
+        interactivity: true,
+      },
+      viewScriptModule: 'file:./view.js',
     },
+    noBlocks: {},
   },
   pluginTemplatesPath: join(__dirname, "plugin-templates"),
   blockTemplatesPath: join(__dirname, "block-templates"),
