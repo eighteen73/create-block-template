@@ -1,47 +1,59 @@
 <?php
 /**
  * Plugin Name:       {{title}}
-{{#pluginURI}}
- * Plugin URI:        {{{pluginURI}}}
-{{/pluginURI}}
-{{#description}}
+ * Plugin URI:        {{pluginURI}}
+ * Update URI:        {{updateURI}}
  * Description:       {{description}}
-{{/description}}
  * Version:           {{version}}
- * Requires at least: 6.1
- * Requires PHP:      7.0
-{{#author}}
- * Author:            {{author}}
-{{/author}}
-{{#license}}
- * License:           {{license}}
-{{/license}}
-{{#licenseURI}}
- * License URI:       {{{licenseURI}}}
-{{/licenseURI}}
+ * Requires at least: 6.8
+ * Requires PHP:      7.4
+ * Requires Plugins:
+ * Author:            eighteen73
+ * Author URI:        https://eighteen73.co.uk
  * Text Domain:       {{textdomain}}
-{{#domainPath}}
- * Domain Path:       {{{domainPath}}}
-{{/domainPath}}
-{{#updateURI}}
- * Update URI:        {{{updateURI}}}
-{{/updateURI}}
+ * Domain Path:       /languages
  *
- * @package           {{slugPascalCase}}
+ * License:           {{license}}
+ * License URI:       {{{licenseURI}}}
+ *
+ * @package           Eighteen73\{{slugPascalCase}}
  */
 
 namespace Eighteen73\{{slugPascalCase}};
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+defined( 'ABSPATH' ) || exit;
 
 // Useful global constants.
 define( '{{slugPascalCase}}_URL', plugin_dir_url( __FILE__ ) );
 define( '{{slugPascalCase}}_PATH', plugin_dir_path( __FILE__ ) );
+define( '{{slugPascalCase}}_INC', {{slugPascalCase}}_PATH . 'includes/' );
 
 // Require the autoloader.
-require_once 'autoload.php';
+$autoloader = {{slugPascalCase}}_PATH . '/vendor/autoload.php';
 
-// Initialise classes.
-Blocks::instance()->setup();
+if ( file_exists( $autoloader ) ) {
+	require_once $autoloader;
+} else {
+	add_action(
+		'admin_notices',
+		function () {
+			printf(
+				'<div class="notice notice-error"><p><strong>%s</strong>: %s</p></div>',
+				esc_html__( '{{title}}', '{{textdomain}}' ),
+				sprintf(
+					/* translators: %s: composer install command */
+					esc_html__( 'Composer dependencies not found. Please run %s to install required dependencies.', '{{textdomain}}' ),
+					'composer install'
+				)
+			);
+		}
+	);
+	return;
+}
+
+// Initialise the plugin.
+Plugin::instance()->setup();
+
+// Register activation and deactivation hooks.
+register_activation_hook( __FILE__, [ Plugin::class, 'activation' ] );
+register_deactivation_hook( __FILE__, [ Plugin::class, 'deactivation' ] );
