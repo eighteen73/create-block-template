@@ -1,6 +1,6 @@
 {
   "name": "@eighteen73/create-block-template",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "A template for use with @wordpress/create-block to allow scaffolding blocks and plugins to eighteen73 standards.",
   "author": "eighteen73",
   "license": "MIT",
