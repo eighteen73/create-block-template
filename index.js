@@ -4,26 +4,30 @@
 const { join } = require("path");
 
 module.exports = {
+  pluginTemplatesPath: join(__dirname, "plugin"),
+  blockTemplatesPath: join(__dirname, "block"),
   defaultValues: {
-    author: 'eighteen73',
-    namespace: 'eighteen73',
-    requiresAtLeast: '6.8',
-    requiresPHP: '7.4',
-    category: 'text',
-    slug: 'example-block',
     title: 'Example Block',
-    description: 'Example Block',
-    version: '0.1.0',
     pluginURI: 'https://eighteen73.co.uk',
     updateURI: 'https://eighteen73.co.uk',
+    description: 'Example Block',
+    version: '0.1.0',
+    requiresAtLeast: '6.8',
+    requiresPHP: '7.4',
+    author: 'eighteen73',
+    domainPath: '/languages',
+    license: 'GPL-2.0-or-later',
+    licenseURI: 'https://www.gnu.org/licenses/gpl-2.0.html',
+    namespace: 'eighteen73',
+    slug: 'example-block',
+    category: 'text',
     attributes: {},
     supports: {
       html: false,
     },
     wpScripts: false,
     wpEnv: false,
-    version: false,
-    editorStyle: false,
+    editorStyle: 'file:./index.css',
     style: 'file:./style-index.css',
     render: 'file:./render.php',
     npmDevDependencies: [
@@ -58,12 +62,16 @@ module.exports = {
       "pot": "wp i18n make-pot . languages/{{textdomain}}.pot --domain={{textdomain}} --exclude=node_modules,vendor,.git"
     },
     transformer: (view) => {
-        return {
-          ...view,
-          slugScreamingSnakeCase: view.slug.replace(/-/g, "_").toUpperCase(),
-          namespaceCamelCase: view.namespace.charAt(0).toLowerCase() + view.namespace.slice(1).toLowerCase(),
-        };
-      },
+      const plugin = view.plugin;
+
+      return {
+        ...view,
+        rootDirectory: plugin ? view.rootDirectory : join('src/blocks', view.slug),
+        folderName: plugin ? join('src/blocks', view.slug) : view.slug,
+        slugScreamingSnakeCase: view.slug.replace(/-/g, "_").toUpperCase(),
+        namespaceCamelCase: view.namespace.charAt(0).toLowerCase() + view.namespace.slice(1).toLowerCase(),
+      };
+    },
   },
   variants: {
     default: {},
@@ -76,9 +84,7 @@ module.exports = {
       viewScriptModule: 'file:./view.js',
     },
     noBlocks: {
-        blockTemplatesPath: null,
+      blockTemplatesPath: null,
     },
   },
-  pluginTemplatesPath: join(__dirname, "plugin-templates"),
-  blockTemplatesPath: join(__dirname, "block-templates"),
 };

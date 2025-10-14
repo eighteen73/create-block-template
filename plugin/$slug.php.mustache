@@ -1,23 +1,40 @@
 <?php
 /**
  * Plugin Name:       {{title}}
+{{#pluginURI}}
  * Plugin URI:        {{pluginURI}}
+{{/pluginURI}}
+{{#updateURI}}
  * Update URI:        {{updateURI}}
+{{/updateURI}}
+{{#description}}
  * Description:       {{description}}
+{{/description}}
+{{#version}}
  * Version:           {{version}}
+{{/version}}
+{{#requiresAtLeast}}
  * Requires at least: {{requiresAtLeast}}
+{{/requiresAtLeast}}
+{{#requiresPHP}}
  * Requires PHP:      {{requiresPHP}}
+{{/requiresPHP}}
  * Requires Plugins:
- * Author:            eighteen73
+ * Author:            {{author}}
  * Author URI:        https://eighteen73.co.uk
  * Text Domain:       {{textdomain}}
- * Domain Path:       /languages
+ * Domain Path:       {{domainPath}}
  *
+{{#license}}
  * License:           {{license}}
+{{/license}}
+{{#licenseURI}}
  * License URI:       {{{licenseURI}}}
+{{/licenseURI}}
  *
- * @package           Eighteen73\{{slugPascalCase}}
+ * @package           {{namespacePascalCase}}\{{slugPascalCase}}
  */
+{{isPlugin}}
 
 namespace {{namespacePascalCase}}\{{slugPascalCase}};
 
