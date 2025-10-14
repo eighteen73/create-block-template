@@ -1,0 +1,33 @@
+{
+	"name": "{{namespace}}/{{slug}}",
+	"description": "{{description}}",
+	"type": "wordpress-plugin",
+	"license": "{{license}}",
+	"minimum-stability": "dev",
+	"authors": [
+		{
+			"name": "eighteen73",
+			"email": "hello@eighteen73.co.uk"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"{{namespacePascalCase}}\\{{slugPascalCase}}\\": "includes/classes/"
+		}
+	},
+	"require": {
+		"php": ">={{requiresPHP}}"
+	},
+	"require-dev": {
+		"eighteen73/wordpress-coding-standards": "^2.0.0"
+	},
+	"scripts": {
+		"lint": "./vendor/bin/phpcs",
+		"format": "./vendor/bin/phpcbf"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
+}

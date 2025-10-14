@@ -1,0 +1,12 @@
+{{#isInteractiveVariant}}
+import { store, getContext } from '@wordpress/interactivity';
+
+store('{{namespace}}/{{slug}}', {
+	actions: {
+		toggle: () => {
+			const context = getContext();
+			context.isVisible = !context.isVisible;
+		},
+	},
+});
+{{/isInteractiveVariant}}

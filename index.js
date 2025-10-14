@@ -4,46 +4,93 @@
 const { join } = require("path");
 
 module.exports = {
+  pluginTemplatesPath: join(__dirname, "plugin"),
+  blockTemplatesPath: join(__dirname, "block"),
   defaultValues: {
-    slug: "eighteen73-block",
-    namespace: "eighteen73-block",
-    title: "eighteen73 Block",
-    author: "eighteen73",
-    description: "A block scaffolded from eighteen73 standards",
-    dashicon: "smiley",
-    npmDependencies: [
+    title: 'Example Block',
+    pluginURI: 'https://eighteen73.co.uk',
+    updateURI: 'https://eighteen73.co.uk',
+    description: 'Example Block',
+    version: '0.1.0',
+    requiresAtLeast: '6.8',
+    requiresPHP: '7.4',
+    author: 'eighteen73',
+    domainPath: '/languages',
+    license: 'GPL-2.0-or-later',
+    licenseURI: 'https://www.gnu.org/licenses/gpl-2.0.html',
+    namespace: 'eighteen73',
+    slug: 'example-block',
+    category: 'text',
+    attributes: {},
+    supports: {
+      html: false,
+    },
+    wpScripts: false,
+    wpEnv: false,
+    editorStyle: false,
+    style: 'file:./style-index.css',
+    render: 'file:./render.php',
+    npmDevDependencies: [
       "@eighteen73/eslint-config-wordpress",
       "@eighteen73/stylelint-config-wordpress",
+      "@wordpress/browserslist-config",
+      "@wordpress/prettier-config",
+      "@wordpress/scripts",
+      "lefthook",
+      "postcss-preset-env",
     ],
-    customPackageJSON: { files: ["[^.]*"] },
     viewScript: "file:./view.js",
     render: "file:./render.php",
     example: {},
     customScripts: {
-      "new-plugin-block":
-        "cd src && npx @wordpress/create-block@latest --template @eighteen73/create-block-template --variant basic --no-plugin",
-      "lint:css": "stylelint './src/**/*.scss'",
-      "lint:js": "eslint './src/**/*.js'",
-      "format:css": "stylelint --fix './src/**/*.scss'",
-      "format:js": "eslint --fix './src/**/*.js'",
-      build: "wp-scripts build",
-      start: "wp-scripts start",
+      'postinstall': 'composer install -o',
+      'start': 'wp-scripts start --webpack-copy-php --blocks-manifest',
+      'build': 'wp-scripts build  --webpack-copy-php --blocks-manifest',
+      'check-engines': 'wp-scripts check-engines',
+      'check-licenses': 'wp-scripts check-licenses',
+      'format': 'npm run format:css && npm run format:js && format:php',
+      'format:css': 'stylelint --fix "./src/**/*.scss"',
+      'format:js': 'eslint --fix "./src/**/*.js"',
+      'format:php': 'composer run format',
+      'lint': 'npm run lint:css && npm run lint:js && npm run lint:php',
+      'lint:css': 'wp-scripts lint-style',
+      'lint:js': 'wp-scripts lint-js',
+      'lint:php': 'composer run lint',
+      'lint:md:docs': 'wp-scripts lint-md-docs',
+      'lint:pkg-json': 'wp-scripts lint-pkg-json',
+      'packages-update': 'wp-scripts packages-update',
+      'plugin-zip': 'wp-scripts plugin-zip',
     },
     transformer: (view) => {
-      const isMultiBlock = view.variantVars && view.variantVars.isMultiVariant;
+      const plugin = view.plugin;
+
+      const customScripts = {
+        ...view.customScripts,
+        pot: `wp i18n make-pot . languages/${view.textdomain}.pot --domain=${view.textdomain} --exclude=node_modules,vendor,.git`,
+      };
+
       return {
         ...view,
-        folderName: isMultiBlock ? `src/${view.slug}` : `src`,
-        isMultiBlock,
+        customScripts,
+        rootDirectory: plugin ? view.rootDirectory : join('src/blocks', view.slug),
+        folderName: plugin ? join('src/blocks', view.slug) : view.slug,
+        slugScreamingSnakeCase: view.slug.replace(/-/g, "_").toUpperCase(),
+        namespaceCamelCase: view.namespace.charAt(0).toLowerCase() + view.namespace.slice(1).toLowerCase(),
       };
     },
   },
   variants: {
-    basic: {},
-    multi: {
-      slug: "multi-block-plugin",
+    default: {},
+    innerBlocks: {},
+    interactive: {
+      supports: {
+        html: false,
+        interactivity: true,
+      },
+      viewScriptModule: 'file:./view.js',
+    },
+    noBlocks: {
+      blockTemplatesPath: null,
     },
   },
-  pluginTemplatesPath: join(__dirname, "plugin-templates"),
-  blockTemplatesPath: join(__dirname, "block-templates"),
 };

@@ -1,0 +1,75 @@
+<?php
+/**
+ * Plugin Name:       {{title}}
+{{#pluginURI}}
+ * Plugin URI:        {{{pluginURI}}}
+{{/pluginURI}}
+{{#updateURI}}
+ * Update URI:        {{{updateURI}}}
+{{/updateURI}}
+{{#description}}
+ * Description:       {{description}}
+{{/description}}
+{{#version}}
+ * Version:           {{version}}
+{{/version}}
+{{#requiresAtLeast}}
+ * Requires at least: {{requiresAtLeast}}
+{{/requiresAtLeast}}
+{{#requiresPHP}}
+ * Requires PHP:      {{requiresPHP}}
+{{/requiresPHP}}
+ * Requires Plugins:
+ * Author:            {{author}}
+ * Author URI:        https://eighteen73.co.uk
+ * Text Domain:       {{textdomain}}
+ * Domain Path:       {{{domainPath}}}
+ *
+{{#license}}
+ * License:           {{license}}
+{{/license}}
+{{#licenseURI}}
+ * License URI:       {{{licenseURI}}}
+{{/licenseURI}}
+ *
+ * @package           {{namespacePascalCase}}\{{slugPascalCase}}
+ */
+
+namespace {{namespacePascalCase}}\{{slugPascalCase}};
+
+defined( 'ABSPATH' ) || exit;
+
+// Useful global constants.
+define( '{{slugScreamingSnakeCase}}_URL', plugin_dir_url( __FILE__ ) );
+define( '{{slugScreamingSnakeCase}}_PATH', plugin_dir_path( __FILE__ ) );
+define( '{{slugScreamingSnakeCase}}_INC', {{slugScreamingSnakeCase}}_PATH . 'includes/' );
+
+// Require the autoloader.
+$autoloader = {{slugScreamingSnakeCase}}_PATH . '/vendor/autoload.php';
+
+if ( file_exists( $autoloader ) ) {
+	require_once $autoloader;
+} else {
+	add_action(
+		'admin_notices',
+		function () {
+			printf(
+				'<div class="notice notice-error"><p><strong>%s</strong>: %s</p></div>',
+				esc_html__( '{{title}}', '{{textdomain}}' ),
+				sprintf(
+					/* translators: %s: composer install command */
+					esc_html__( 'Composer dependencies not found. Please run %s to install required dependencies.', '{{textdomain}}' ),
+					'composer install'
+				)
+			);
+		}
+	);
+	return;
+}
+
+// Initialise the plugin.
+Plugin::instance()->setup();
+
+// Register activation and deactivation hooks.
+register_activation_hook( __FILE__, [ Plugin::class, 'activation' ] );
+register_deactivation_hook( __FILE__, [ Plugin::class, 'deactivation' ] );
