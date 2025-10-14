@@ -7,9 +7,11 @@ Template for use with @wordpress/create-block to scaffold blocks to eighteen73 s
 ## Features
 
 - Single block plugin
-- Multi block plugin
-- Create another block inside multi block plugin
-- Create a block without the build tools (for theme use)
+-- Default (dynamic)
+-- innerBlocks
+-- Interactive
+- Create another block inside plugin
+- Create a plugin
 
 ## Usage
 
@@ -19,28 +21,17 @@ Basic usage:
 npx @wordpress/create-block@latest --template @eighteen73/create-block-template
 ```
 
-Then follow the options to pick the variant
+Then follow the options to pick the variant.
 
-Create single block plugin:
 
-```
-npx @wordpress/create-block@latest --template @eighteen73/create-block-template --variant basic
-```
-
-Create multi block plugin:
+### Create another block inside a block plugin:
 
 ```
-npx @wordpress/create-block@latest --template @eighteen73/create-block-template --variant multi
+npx @wordpress/create-block@latest --template @eighteen73/create-block-template --no-plugin
 ```
 
-Create another block inside multi block plugin:
+### Create a plugin without blocks:
 
 ```
-npm run new-plugin-block -- block-name
-```
-
-Create a block without the build tools (for theme use):
-
-```
-npx @wordpress/create-block@latest --template @eighteen73/create-block-template --variant basic --no-plugin
+npx @wordpress/create-block@latest --template @eighteen73/create-block-template --variant noBlocks
 ```
