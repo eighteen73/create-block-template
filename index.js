@@ -25,8 +25,9 @@ module.exports = {
     supports: {
       html: false,
     },
+    wpScripts: false,
     wpEnv: false,
-    editorStyle: 'file:./index.css',
+    editorStyle: false,
     style: 'file:./style-index.css',
     render: 'file:./render.php',
     npmDevDependencies: [
@@ -42,11 +43,12 @@ module.exports = {
     render: "file:./render.php",
     example: {},
     customScripts: {
-      'start': 'wp-scripts start --blocks-manifest',
-      'build': 'wp-scripts build --blocks-manifest',
+      'postinstall': 'composer install -o',
+      'start': 'wp-scripts start --webpack-copy-php --blocks-manifest',
+      'build': 'wp-scripts build  --webpack-copy-php --blocks-manifest',
       'check-engines': 'wp-scripts check-engines',
       'check-licenses': 'wp-scripts check-licenses',
-      'format': 'npm run format:css && npm run format:js && npm run format:php',
+      'format': 'npm run format:css && npm run format:js && format:php',
       'format:css': 'stylelint --fix "./src/**/*.scss"',
       'format:js': 'eslint --fix "./src/**/*.js"',
       'format:php': 'composer run format',
