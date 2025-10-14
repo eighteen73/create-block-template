@@ -33,4 +33,7 @@
 		This element is now visible!
 	</p>
 	{{/isInteractiveVariant}}
+    {{#isDefaultVariant}}
+    <?php esc_html_e( 'Hello from {{title}}', '{{textdomain}}' ); ?>
+    {{/isDefaultVariant}}
 </div>
