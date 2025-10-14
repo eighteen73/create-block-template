@@ -58,13 +58,18 @@ module.exports = {
       'lint:pkg-json': 'wp-scripts lint-pkg-json',
       'packages-update': 'wp-scripts packages-update',
       'plugin-zip': 'wp-scripts plugin-zip',
-      'pot': 'wp i18n make-pot . languages/{{textdomain}}.pot --domain={{textdomain}} --exclude=node_modules,vendor,.git'
     },
     transformer: (view) => {
       const plugin = view.plugin;
 
+      const customScripts = {
+        ...view.customScripts,
+        pot: `wp i18n make-pot . languages/${view.textdomain}.pot --domain=${view.textdomain} --exclude=node_modules,vendor,.git`,
+      };
+
       return {
         ...view,
+        customScripts,
         rootDirectory: plugin ? view.rootDirectory : join('src/blocks', view.slug),
         folderName: plugin ? join('src/blocks', view.slug) : view.slug,
         slugScreamingSnakeCase: view.slug.replace(/-/g, "_").toUpperCase(),
