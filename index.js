@@ -87,6 +87,7 @@ module.exports = {
         html: false,
         interactivity: true,
       },
+      viewScript: null,
       viewScriptModule: 'file:./view.js',
     },
     noBlocks: {
